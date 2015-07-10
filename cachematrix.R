@@ -40,25 +40,48 @@ makeCacheMatrix <- function(x = matrix()) {
 } # End of makeCacheMatrix
 
 
-## Write a short comment describing this function
+
+## This function returns the inverse of the matrix "x" if it is cached,
+## if the matrix inversed was not cached, the function calculates the inverse
+## and caches it for further use. Note that x is an object of makeCacheMatrix
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+    # Let's get the inverse and check if it was cached before
+    inverse <- x$getInverse()
+    # If the value is NULL we print a message and return the cached value
+    if(!is.null(inverse)) {
+        message("Retrieving the cached matrix... ")
+        return(inverse)
+    }
+    # Let's get the actual matrix using the getVariable function
+    inverseData <- x$getVariable()
+    # Using R function to invert a matrix
+    inverse <- solve(inverseData, ...)
+    # We can now cache the inverse using the setInverse function
+    x$setInverse(inverse)
+    # Returning the inverse function
+    inverse
 }
 
 ## ----- TEST CASES -----
 ## This section is optinal for the user, you can use it to test the above
 ## functions, you can add your own cases or modify the given ones.
 
-## Testing makeCacheMatrix
-# Generating a matrix
+## Testing the makeCacheMatrix function:
+# Generating two test matrices, that can be inverted
 A <- matrix(c(1,0,5,2,1,6,3,4,0),nrow=3,ncol=3)
+B <-matrix(c(7,0,-3,2,3,4,1,-1,-2),nrow=3,ncol=3)
 # Making the cacheMatrix object
 test_CacheMatrix <- makeCacheMatrix(A)
 # Checking if we returned a list
 if (is.list(test_CacheMatrix)){
-    print("Good!, we returned the right data type")
+    message("Good!, we returned the right data type")
+}else{
+    message("Something went wrong!")
 }
-# Printing the elements of the list: It should be "getVariable", "setVariable",
-# "getInverse", and "setInverse"
+# Printing the elements of the list: 
+# "getVariable", "setVariable", "getInverse", and "setInverse"
 print(ls(test_CacheMatrix))
+
+
+## Testing the cacheSolve function:
