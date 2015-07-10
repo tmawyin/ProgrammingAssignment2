@@ -16,14 +16,28 @@ makeCacheMatrix <- function(x = matrix()) {
     # Define the initial variable holding the inverse of the matrix
     inverse <- NULL
     
-    # SET: sets the data in x based on the user defined yMatrix variable
-    setInverse <- function(yMatrix) {
+    # setVariable: sets the data in x based on the user defined yMatrix variable
+    setVariable <- function(yMatrix) {
         # yMatrix is stored as x from the parent environment 
         x <<- yMatrix
         inverse <<- NULL
     } # End of setInverse
     
-    # 
+    # getVariable: returns the value of the data, in this case x
+    getVariable <- function() x
+    
+    # setInverse: sets the inverse (invData) to the object variable "inverse"
+    setInverse <- function(invData) inverse <<- invData
+    
+    # getInverse: returns the value of the inverse matrix
+    getInverse <- function() inverse
+    
+    # We create a list with all the functions and return it
+    list(set = setVariable, 
+         get = getVariable,
+         setInverse = setInverse,
+         getInverse = getInverse)
+}
     
 } # End of makeCacheMatrix
 
