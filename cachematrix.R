@@ -33,12 +33,10 @@ makeCacheMatrix <- function(x = matrix()) {
     getInverse <- function() inverse
     
     # We create a list with all the functions and return it
-    list(set = setVariable, 
-         get = getVariable,
+    list(setVariable = setVariable, 
+         getVariable = getVariable,
          setInverse = setInverse,
-         getInverse = getInverse)
-}
-    
+         getInverse = getInverse)   
 } # End of makeCacheMatrix
 
 
@@ -47,3 +45,20 @@ makeCacheMatrix <- function(x = matrix()) {
 cacheSolve <- function(x, ...) {
         ## Return a matrix that is the inverse of 'x'
 }
+
+## ----- TEST CASES -----
+## This section is optinal for the user, you can use it to test the above
+## functions, you can add your own cases or modify the given ones.
+
+## Testing makeCacheMatrix
+# Generating a matrix
+A <- matrix(c(1,0,5,2,1,6,3,4,0),nrow=3,ncol=3)
+# Making the cacheMatrix object
+test_CacheMatrix <- makeCacheMatrix(A)
+# Checking if we returned a list
+if (is.list(test_CacheMatrix)){
+    print("Good!, we returned the right data type")
+}
+# Printing the elements of the list: It should be "getVariable", "setVariable",
+# "getInverse", and "setInverse"
+print(ls(test_CacheMatrix))
