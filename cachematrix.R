@@ -70,18 +70,32 @@ cacheSolve <- function(x, ...) {
 ## Testing the makeCacheMatrix function:
 # Generating two test matrices, that can be inverted
 A <- matrix(c(1,0,5,2,1,6,3,4,0),nrow=3,ncol=3)
-B <-matrix(c(7,0,-3,2,3,4,1,-1,-2),nrow=3,ncol=3)
+B <- matrix(c(7,0,-3,2,3,4,1,-1,-2),nrow=3,ncol=3)
 # Making the cacheMatrix object
-test_CacheMatrix <- makeCacheMatrix(A)
+test_CacheMatrixA <- makeCacheMatrix(A)
 # Checking if we returned a list
-if (is.list(test_CacheMatrix)){
+if (is.list(test_CacheMatrixA)){
     message("Good!, we returned the right data type")
 }else{
     message("Something went wrong!")
 }
 # Printing the elements of the list: 
 # "getVariable", "setVariable", "getInverse", and "setInverse"
-print(ls(test_CacheMatrix))
+print(ls(test_CacheMatrixA))
 
 
 ## Testing the cacheSolve function:
+# Let's create a CacheMatrix object for matrix B
+test_CacheMatrixB <- makeCacheMatrix(B)
+# We can now cache the inverse of both matrices
+invA <- cacheSolve(test_CacheMatrixA)
+invB <- cacheSolve(test_CacheMatrixB)
+# Let's test the results agains the actual inverses
+actualInverseA <- matrix(c(-24,20,-5,18,-15,4,5,-4,1), nrow=3, ncol=3)
+actualInverseB <- matrix(c(-2,3,9,8,-11,-34,-5,7,21), nrow=3, ncol=3)
+if (all.equal(invA, actualInverseA)){
+    message("Inverse of matrix A matches")
+}
+if (all.equal(invB, actualInverseB)){
+    message("Inverse of matrix B matches")
+}
